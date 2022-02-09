@@ -80,6 +80,7 @@ sudo apt-get update && sudo apt-get upgrade
  make clean
  sudo apt-get updat
  sudo nano /etc/dphys-swapfile
+ 
 #Nano text editor진입 후 CONF_SWAPSIZE=2048 -> CONF_SWAPSIZE=100 로 변경
  sudo reboot
 ```
