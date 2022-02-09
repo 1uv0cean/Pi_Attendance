@@ -4,7 +4,7 @@
 라즈베이파이 업데이트를 진행합니다.
 
 ```
-    sudo apt-get update && sudo apt-get upgrade   
+sudo apt-get update && sudo apt-get upgrade   
 ```
     
 필요한 모듈들을 설치해줍니다.
