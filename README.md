@@ -1,12 +1,14 @@
 # Pi_Attendance
 얼굴 인식 출석부 프로그램
 
-라즈베이파이 업데이트를 진행합니다. 
+라즈베이파이 업데이트를 진행합니다.
+
     ```
     sudo apt-get update && sudo apt-get upgrade   
     ```
     
 필요한 모듈들을 설치해줍니다.
+
 ```
  #OpenCV설치를 위한 의존성 설치   
     sudo apt-get install build-essential cmake git unzip pkg-config    
@@ -22,6 +24,7 @@
     sudo apt-get install gcc-arm*   
     sudo apt-get install protobuf-compiler   
     sudo apt-get install python-dev python-numpy   
+    
   #OpenCV 설치
     cd ~
     wget -O opencv.zip https://github.com/opencv/opencv/archive/4.1.2.zip
