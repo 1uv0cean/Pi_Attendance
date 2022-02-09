@@ -5,7 +5,9 @@
     ```
     sudo apt-get update && sudo apt-get upgrade   
     ```
+    
 필요한 모듈들을 설치해줍니다.
+```
  #OpenCV설치를 위한 의존성 설치   
     sudo apt-get install build-essential cmake git unzip pkg-config    
     sudo apt-get install libjpeg-dev libpng-dev libtiff-dev   
@@ -77,3 +79,4 @@
     sudo nano /etc/dphys-swapfile
     #Nano text editor진입 후 CONF_SWAPSIZE=2048 -> CONF_SWAPSIZE=100 로 변경
     sudo reboot
+```
