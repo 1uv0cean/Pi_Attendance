@@ -25,7 +25,7 @@
     sudo apt-get install protobuf-compiler   
     sudo apt-get install python-dev python-numpy   
     
-  #OpenCV 설치
+ #OpenCV 설치
     cd ~
     wget -O opencv.zip https://github.com/opencv/opencv/archive/4.1.2.zip
     wget -O opencv_contrib.zip https://github.com/opencv/opencv_contrib/archive/4.1.2.zip
@@ -37,7 +37,7 @@
     mkdir build
     cd build
     
-   #Build하기
+  #Build하기
     cmake -D CMAKE_BUILD_TYPE=RELEASE \
         -D CMAKE_INSTALL_PREFIX=/usr/local \
         -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib/modules \
@@ -63,18 +63,18 @@
         -D OPENCV_GENERATE_PKGCONFIG=ON \
         -D BUILD_EXAMPLES=OFF ..
         
-   #Build를 위한 메모리 설정
+  #Build를 위한 메모리 설정
     sudo nano /etc/dphys-swapfile
     Nano text editor진입 후 CONF_SWAPSIZE=100 -> CONF_SWAPSIZE=2048 로 변경
     
-   #dphys-swapfile 재시작
+  #dphys-swapfile 재시작
     sudo /etc/init.d/dphys-swapfile stop
     sudo /etc/init.d/dphys-swapfile start
     
-   #make
+  #make
     make -j4
     
-   #Opencv 설치 마무리
+  #Opencv 설치 마무리
     sudo make install
     sudo ldconfig
     make clean
