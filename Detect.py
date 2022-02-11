@@ -6,7 +6,8 @@ from os import listdir
 from os.path import isdir, isfile, join
 from datetime import datetime
 from openpyxl import load_workbook
-import time
+
+
 # 얼굴 인식용 haarcascade 로딩
 face_classifier = cv2.CascadeClassifier('./haarcascades/haarcascade_frontalface_default.xml')    
 
@@ -68,7 +69,7 @@ def trains():
 def face_detector(img, size = 0.5):
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         faces = face_classifier.detectMultiScale(gray,1.3,5)
-        if faces is():
+        if faces == ():
             return img,[]
         for(x,y,w,h) in faces:
             cv2.rectangle(img, (x,y),(x+w,y+h),(0,255,255),2)
