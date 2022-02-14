@@ -1,12 +1,17 @@
 import cv2
 import numpy as np
 #라즈베리 파이의 경우 아래 주석 해제
-#import picamera
+import picamera
 from os import listdir
 from os.path import isdir, isfile, join
 from datetime import datetime
 from openpyxl import load_workbook
+from PyQt5.QtWidgets import *
+from PyQt5.QtCore import Qt
+from PyQt5 import uic
 
+uid=""
+uname=""
 
 # 얼굴 인식용 haarcascade 로딩
 face_classifier = cv2.CascadeClassifier('./haarcascades/haarcascade_frontalface_default.xml')    
@@ -24,7 +29,6 @@ def train(name):
         image_path = data_path + face_pics[i]
         n = np.fromfile(image_path, dtype=np.uint8)
         img = cv2.imdecode(n, cv2.IMREAD_GRAYSCALE)
-
         Training_Data.append(np.asarray(img, dtype=np.uint8))
         Labels.append(i)
     # 학습할 데이터(이미지)가 없으면 함수 종료
@@ -81,7 +85,7 @@ def face_detector(img, size = 0.5):
 def run(models):    
     print("출석체크 프로그램 시작")
     #카메라 열기 
-    cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+    cap = cv2.VideoCapture(0)
     try:
         while True:
             #카메라로 부터 사진 한장 읽기 
@@ -102,6 +106,8 @@ def run(models):
                     if min_score > result[1]:
                         min_score = result[1]
                         min_score_name = key
+                        global uid
+                        global uname
                         uid = min_score_name.split("_")[0]
                         uname = min_score_name.split("_")[1]
                 # 0에 가까울 수록 정확하다.         
@@ -128,7 +134,8 @@ def run(models):
                     write_ws= load_wb.active
                     write_ws.append([uid,uname,now])
                     load_wb.save("attend.xlsx")
-                    break      
+                    break
+                    
                     
             #얼굴 검출 안됨 
             except:

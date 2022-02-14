@@ -7,13 +7,16 @@ from PyQt5 import uic
 import cv2
 import numpy as np
 #라즈베리 파이의 경우 아래 주석 해제
-#import picamera
+import picamera
 from os import listdir, makedirs
 from os.path import isdir, isfile, join
 from datetime import datetime
 from openpyxl import load_workbook
 from Detect import face_detector, run, train, face_classifier, trains
 from Register import face_extractor, take_pictures
+import sys
+sys.path.append("Detect")
+import Detect as dt
 
 
 class MyApp(QWidget):
@@ -160,7 +163,7 @@ class MyApp(QWidget):
     def run(models):    
         print("출석체크 프로그램 시작")
         #카메라 열기 
-        cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+        cap = cv2.VideoCapture(0)
         try:
             while True:
                 #카메라로 부터 사진 한장 읽기 
@@ -207,7 +210,6 @@ class MyApp(QWidget):
                         write_ws= load_wb.active
                         write_ws.append([uid,uname,now])
                         load_wb.save("attend.xlsx")
-                        print("출석체크 완료!")
                         break      
                         
                 #얼굴 검출 안됨 
@@ -289,29 +291,26 @@ class MyApp(QWidget):
 
     def OnBtn1Clicked(self):
         id = self.eid.text()
-        print(id)
-        id_auth = True
-        load_wb = load_workbook("user.xlsx")
-        load_ws = load_wb['Sheet1']
-        '''
-        for cell in load_ws['A']:   # A열의 모든 셀을 확인
-            if cell.value == id:
-                id_auth = False
-        if id_auth == False:
-            print("이미 존재하는 아이디입니다.")
-        else:
-        '''
         name = self.ename.text()
-        take_pictures(id+"_"+name)
-        write_ws= load_wb.active
-        write_ws.append([id,name])
-        load_wb.save("user.xlsx")
-        QMessageBox.about(self,'회원등록','사용자 입력 완료!')
+        if(id == '' or name == ''):
+            QMessageBox.about(self,'Error','아이디와 이름을 모두 입력해주세요!')
+        else:
+            load_wb = load_workbook("user.xlsx")
+            load_ws = load_wb['Sheet1']
+            take_pictures(id+"_"+name)
+            write_ws= load_wb.active
+            write_ws.append([id,name])
+            load_wb.save("user.xlsx")
+            QMessageBox.about(self,'회원등록','사용자 입력 완료!')
+            self.eid.setText("")
+            self.ename.setText("")
+        
 
     def OnBtn2Clicked(self):
         models = trains()
-        run(models)
-
+        while True:
+            run(models)
+            QMessageBox.about(self,'출석체크','ID:'+dt.uid+'\n이름:'+dt.uname+'\n출석체크 완료!')
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
